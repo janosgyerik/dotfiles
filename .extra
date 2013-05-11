@@ -12,9 +12,6 @@ alias lla="ll -a"
 alias l.="ls -d .[a-zA-Z0-9]*"
 alias l1="ls -1"
 
-# other aliases
-alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
-
 
 
 # ssh agent setup
@@ -66,5 +63,15 @@ ps1_restore() {
 }
 
 export PYTHONIOENCODING=utf-8
+
+
+
+# git
+GIT_AUTHOR_NAME="Janos Gyerik"
+GIT_COMMITTER_NAME="$GIT_AUTHOR_NAME"
+git config --global user.name "$GIT_AUTHOR_NAME"
+GIT_AUTHOR_EMAIL="info@janosgyerik.com"
+GIT_COMMITTER_EMAIL="$GIT_AUTHOR_EMAIL"
+git config --global user.email "$GIT_AUTHOR_EMAIL"
 
 # eof
