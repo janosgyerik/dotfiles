@@ -1,54 +1,157 @@
-" Make Vim more useful
-set nocompatible
+" Prevent modelines in files from being evaluated (avoids a potential
+"
+" security problem wherein a malicious user could write a hazardous
+" modeline into a file) (override default value of 5)
+set modelines=0
+
+" general editing
+set nocompatible    " use vim defaults instead of 100% vi compatibility
+set backspace=indent,eol,start  " more powerful backspacing
+set whichwrap=b,s,<,>,[,],h,l,~     " easier cursor movement
+set autoindent
+set textwidth=0     " don't wrap lines by default
+set nobackup        " Don't keep a backup file
+set updatecount=0   " Don't create swap file
+set viminfo='20,\"50    " don't store more than 50 lines of registers
+set history=50      " keep 50 lines of command line history
+set ruler           " show the cursor position all the time
+set showcmd         " Show (partial) command in status line
+set showmatch       " Show matching brackets
+set showmode        " indicate Insert, Replace or Visual mode
+set ignorecase      " Do case insensitive matching
+set incsearch       " Incremental search
+set hlsearch        " highlight all matches of search results
+set autowrite       " Automatically save before commands like :next and :make
+set number          " show line numbers
+set pastetoggle=<F11>   " toggle paste option in Insert mode
+set encoding=utf-8
+set encoding=utf-8 nobomb  " testing this for a while
+
+
+" folding
+set foldmethod=indent
+set foldminlines=1
+set nofoldenable    " disabled by default, but shortcut to toggle
+nmap \f :set foldenable!<CR>
+
+" Suffixes that get lower priority when doing tab completion for filenames.
+" These are files we are not likely to want to edit or read.
+set suffixes=.bak,~,.swp,.o,.info,.aux,.log,.dvi,.bbl,.blg,.brf,.cb,.ind,.idx,.ilg,.inx,.out,.toc
+
+" We know xterm-debian is a color terminal
+if &term =~ "xterm-debian" || &term =~ "xterm-xfree86"
+  set t_Co=16
+  set t_Sf=[3%dm
+  set t_Sb=[4%dm
+endif
+
+" Make p in Visual mode replace the selected text with the "" register.
+vnoremap p <Esc>:let current_reg = @"<CR>gvdi<C-R>=current_reg<CR><Esc>
+
+syntax on           " vim5 and later support syntax highlighting
+
+
+if has("autocmd")
+  " Enable file type detection
+  filetype plugin indent on
+
+  " Jump to last cursor position
+  autocmd BufReadPost * if line("'\"") > 0 && line("'\"") <= line("$") | exe "normal g'\"" | endif
+
+  " custom tab settings depending on file type
+  autocmd FileType vim setlocal ts=2 sts=2 sw=2 expandtab
+  autocmd FileType python setlocal ts=4 sts=4 sw=4 expandtab
+
+	" Treat .json files as .js
+	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+endif
+
+" Mappings for normal mode
+" re-indent
+nnoremap <Tab> 0d^k$Ji<Enter><Esc>
+" Mappings for editing mode
+"
+" default whitespace preferences
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
+
+" for hex editing
+augroup Binary
+  au!
+  au BufReadPre  *.bin let &bin=1
+  au BufReadPost *.bin if &bin | %!xxd
+  au BufReadPost *.bin set ft=xxd | endif
+  au BufWritePre *.bin if &bin | %!xxd -r
+  au BufWritePre *.bin endif
+  au BufWritePost *.bin if &bin | %!xxd
+  au BufWritePost *.bin set nomod | endif
+augroup END
+
+au BufRead,BufNewFile *.{md,mdown,mkd,mkdn,markdown,mdwn}   set filetype=mkd
+
+
+" cursor line highlighting
+set cursorline
+highlight CursorLine guibg=#e0e0f0
+autocmd WinEnter * setlocal cursorline
+autocmd WinLeave * setlocal nocursorline
+
+
+" http://vimcasts.org/episodes/show-invisibles/
+nmap \l :set list!<CR>
+set listchars=tab:▸\ ,eol:¬
+" Invisible character colors
+"highlight NonText guifg=#4a4a59
+"highlight SpecialKey guifg=#4a4a59
+
+
+" http://vimcasts.org/episodes/soft-wrapping-text/
+set wrap linebreak
+" movement on display lines while holding down command key
+vmap <D-j> gj
+vmap <D-k> gk
+vmap <D-4> g$
+vmap <D-6> g^
+vmap <D-0> g^
+nmap <D-j> gj
+nmap <D-k> gk
+nmap <D-4> g$
+nmap <D-6> g^
+nmap <D-0> g^
+" this helps to see the difference in display lines and numbered lines
+set showbreak=…  " insterted with ctrl-v u2026
+
+" http://vimcasts.org/episodes/hard-wrapping-text/
+" gqip to format a paragraph
+" set textwidth
+" set formatoptions=tcq
+set formatoptions=tcqn1
+" +a reformat text while editing
+" set fo+=a
+" set fo-=n
+" gw always uses vim's internal formatting
+nmap \f :set fo=tcqn1a<CR>
+nmap \F :set fo=n1croql<CR>
+
+" convert mediawiki headers to markdown headers
+" let @h=':s/^=* *//:s/ *=*$//$Yp:s/./-/g'
+" let @n='/^='
+
 " Use the OS clipboard by default (on versions compiled with `+clipboard`)
 set clipboard=unnamed
 " Enhance command-line completion
 set wildmenu
-" Allow cursor keys in insert mode
-set esckeys
-" Allow backspace in insert mode
-set backspace=indent,eol,start
 " Optimize for fast terminal connections
 set ttyfast
-" Add the g flag to search/replace by default
-set gdefault
-" Use UTF-8 without BOM
-set encoding=utf-8 nobomb
 " Change mapleader
 let mapleader=","
-" Don’t add empty newlines at the end of files
-set binary
-set noeol
-" Centralize backups, swapfiles and undo history
-set backupdir=~/.vim/backups
-set directory=~/.vim/swaps
-if exists("&undodir")
-	set undodir=~/.vim/undo
-endif
 
 " Respect modeline in files
 set modeline
-set modelines=4
-" Enable per-directory .vimrc files and disable unsafe commands in them
-set exrc
-set secure
-" Enable line numbers
-set number
-" Enable syntax highlighting
-syntax on
-" Highlight current line
-set cursorline
-" Make tabs as wide as two spaces
-set tabstop=2
-" Show “invisible” characters
-set lcs=tab:▸\ ,trail:·,eol:¬,nbsp:_
-set list
-" Highlight searches
-set hlsearch
-" Ignore case of searches
-set ignorecase
-" Highlight dynamically as pattern is typed
-set incsearch
+set modelines=4  " todo: useful?
 " Always show status line
 set laststatus=2
 " Enable mouse in all modes
@@ -57,27 +160,16 @@ set mouse=a
 set noerrorbells
 " Don’t reset cursor to start of line when moving around.
 set nostartofline
-" Show the cursor position
-set ruler
 " Don’t show the intro message when starting Vim
-set shortmess=atI
-" Show the current mode
-set showmode
+"set shortmess=atI
 " Show the filename in the window titlebar
 set title
-" Show the (partial) command as it’s being typed
-set showcmd
-" Use relative line numbers
-if exists("&relativenumber")
-	set relativenumber
-	au BufReadPost * set relativenumber
-endif
 " Start scrolling three lines before the horizontal window border
-set scrolloff=3
+set scrolloff=3  " todo: useful?
 
 " Strip trailing whitespace (,ss)
 function! StripWhitespace()
-	let save_cursor = getpos(".")
+  let save_cursor = getpos(".")
 	let old_query = getreg('/')
 	:%s/\s\+$//e
 	call setpos('.', save_cursor)
@@ -87,10 +179,4 @@ noremap <leader>ss :call StripWhitespace()<CR>
 " Save a file as root (,W)
 noremap <leader>W :w !sudo tee % > /dev/null<CR>
 
-" Automatic commands
-if has("autocmd")
-	" Enable file type detection
-	filetype on
-	" Treat .json files as .js
-	autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
-endif
+" eof
