@@ -1,0 +1,70 @@
+# aliases adding verbosity to common commands
+alias cp='cp -v'
+alias mv='mv -v'
+alias rm='rm -v'
+alias mkdir='mkdir -v'
+#alias rmdir='rmdir -v'  # not in mac
+
+# Convenince aliases
+alias ll="ls -l"
+alias la="ls -a"
+alias lla="ll -a"
+alias l.="ls -d .[a-zA-Z0-9]*"
+alias l1="ls -1"
+
+# other aliases
+alias vlc='/Applications/VLC.app/Contents/MacOS/VLC'
+
+
+
+# ssh agent setup
+ssh_agent_env=~/.ssh/env
+
+check_ssh_agent() {
+    test "$SSH_AGENT_PID" && ps -p $SSH_AGENT_PID | grep -e $SSH_AGENT_PID -e ssh-agent >/dev/null 2>/dev/null
+}
+
+if ! check_ssh_agent; then
+    if test -f $ssh_agent_env; then
+	. $ssh_agent_env
+	if ! check_ssh_agent; then
+	    ssh-agent > $ssh_agent_env
+	    . $ssh_agent_env
+	fi
+    else
+	ssh-agent > $ssh_agent_env
+	. $ssh_agent_env
+    fi
+fi
+
+ssh-add -L >/dev/null 2>/dev/null || ssh-add
+
+# ssh agent setup END
+
+
+
+# virtualenv and python
+
+alias django15='. ~/virtualenv/django15/bin/activate'
+alias django14='. ~/virtualenv/django14/bin/activate'
+alias django13='. ~/virtualenv/django13/bin/activate'
+alias mapium='. ~/virtualenv/mapium/bin/activate'
+alias flask='. ~/virtualenv/flask/bin/activate'
+
+function venv() {
+    . ~/virtualenv/$1/bin/activate
+}
+
+ps1_simple() {
+    test "$ps1_save" || ps1_save="$PS1"
+    PS1='$ '
+}
+
+ps1_restore() {
+    test "$ps1_save" && PS1="$ps1_save"
+    ps1_save=
+}
+
+export PYTHONIOENCODING=utf-8
+
+# eof
