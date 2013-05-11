@@ -1,0 +1,162 @@
+" https://github.com/skilldrick/vimrc/blob/master/vimrc
+"
+" Pathogen makes it much easier to use git submodules
+" See http://vimcasts.org/episodes/synchronizing-plugins-with-git-submodules-and-pathogen/
+" for more details.
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
+" Hide buffers instead of closing them
+set hidden
+
+" Don't show the toolbar in gVim
+set guioptions-=T
+
+filetype on  " Automatically detect file types.
+set nocompatible  " We don't want vi compatibility.
+
+" Add recently accessed projects menu (project plugin)
+set viminfo^=!
+
+" Minibuffer Explorer Settings
+let g:miniBufExplMapWindowNavVim = 1
+let g:miniBufExplMapWindowNavArrows = 1
+let g:miniBufExplMapCTabSwitchBufs = 1
+let g:miniBufExplModSelTarget = 1
+
+" alt+n or alt+p to navigate between entries in QuickFix
+map <silent> <m-p> :cp <cr>
+map <silent> <m-n> :cn <cr>
+
+" Change which file opens after executing :Rails command
+let g:rails_default_file='config/database.yml'
+
+syntax enable
+set background=dark
+colorscheme solarized
+
+" allow backspacing over everything in insert mode
+set backspace=indent,eol,start
+
+
+" Switch syntax highlighting on, when the terminal has colors
+" Also switch on highlighting the last used search pattern.
+if &t_Co > 2 || has("gui_running")
+  syntax on
+  set hlsearch
+endif
+
+" Only do this part when compiled with support for autocommands.
+if has("autocmd")
+
+  " Enable file type detection.
+  " Use the default filetype settings, so that mail gets 'tw' set to 72,
+  " 'cindent' is on in C files, etc.
+  " Also load indent files, to automatically do language-dependent indenting.
+  filetype plugin indent on
+
+  autocmd BufNewFile,BufREad *.json,*.jsx set ft=javascript
+  autocmd BufNewFile,BufREad *.feature set ft=cucumber
+
+  autocmd FileType python set tabstop=4|set shiftwidth=4|set expandtab
+
+  " Put these in an autocmd group, so that we can delete them easily.
+  augroup vimrcEx
+  au!
+
+  " For all text files set 'textwidth' to 78 characters.
+  autocmd FileType text setlocal textwidth=78
+
+  " When editing a file, always jump to the last known cursor position.
+  " Don't do it when the position is invalid or when inside an event handler
+  " (happens when dropping a file on gvim).
+  " Also don't do it when the mark is in the first line, that is the default
+  " position when opening a file.
+  autocmd BufReadPost *
+    \ if line("'\"") > 1 && line("'\"") <= line("$") |
+    \   exe "normal! g`\"" |
+    \ endif
+
+  augroup END
+
+  augroup CommandTExtension
+    autocmd!
+    autocmd FocusGained * CommandTFlush
+    autocmd BufWritePost * CommandTFlush
+  augroup END
+
+else
+
+  set autoindent		" always set autoindenting on
+
+endif " has("autocmd")
+
+set ffs=unix,dos
+
+" Tabs are two spaces unless otherwise defined
+set softtabstop=2
+set tabstop=8
+set shiftwidth=2
+set expandtab
+
+" change the mapleader from \ to ,
+let mapleader=","
+
+" Quickly edit/reload the vimrc file
+nmap <silent> <leader>ev :e $MYVIMRC<CR>
+nmap <silent> <leader>sv :so $MYVIMRC<CR>
+
+" Use magic regexes (much less faffy escaping)
+set magic
+
+" This section from Destroy All Software
+" https://www.destroyallsoftware.com/file-navigation-in-vim.html
+
+" Quick buffer switching
+nnoremap <leader><leader> <c-^>
+
+" Can't be bothered to understand ESC vs <c-c> in insert mode
+imap <c-c> <esc>
+" Clear the search buffer when hitting return
+nnoremap <CR> :nohlsearch<cr>
+
+" Set current window at least 84 wide and as tall as possible
+" while leaving other windows 5 lines tall
+set winwidth=84
+set winheight=5
+set winminheight=5
+set winheight=999
+
+" Always show status lines for files
+set laststatus=2
+
+" Incremental search
+set incsearch
+
+" Always highlight the current line
+set cursorline
+
+" Move around splits with <c-hjkl>
+nnoremap <c-j> <c-w>j
+nnoremap <c-k> <c-w>k
+nnoremap <c-h> <c-w>h
+nnoremap <c-l> <c-w>l
+
+" Troll @hoverbird
+map <Left> :echo "No left key for you Patrick!"<cr>
+map <Right> :echo "No right key for you Patrick!"<cr>
+map <Up> :echo "No up key for you Patrick!"<cr>
+map <Down> :echo "No down key for you Patrick!"<cr>
+
+" Show me those sneaky tabs and trailing spaces
+set list listchars=tab:»·,trail:·
+
+" Faster escape (via ghickman)
+inoremap jk <esc>
+
+" This needs to be high for the Twitter codebase
+let g:CommandTMaxFiles=20000
+
+" Make search case-insensitive when search string is all lowercase
+set ignorecase
+set smartcase
