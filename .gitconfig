@@ -33,8 +33,8 @@
 	whitespace = fix
 
 [core]
-	# Treat spaces before tabs, lines that are indented with 8 or more spaces, and all kinds of trailing whitespace as an error
-	whitespace = space-before-tab,indent-with-non-tab,trailing-space
+	# Treat spaces before tabs, and all kinds of trailing whitespace as an error
+	whitespace = space-before-tab,trailing-space
 
 [color]
 	# Use colors in Git commands that are capable of colored output when outputting to the terminal
