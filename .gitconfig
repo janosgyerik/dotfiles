@@ -1,6 +1,6 @@
 [user]
-	name = Janos Gyerik
-	email = info@janosgyerik.com
+    name = Janos Gyerik
+    email = info@janosgyerik.com
 
 [alias]
     # aliases in Bazaar
@@ -17,63 +17,63 @@
     log2 = log --first-parent
     untracked = ls-files -o
 
-	# View the SHA, description, and history graph of the latest 20 commits
-	l = log --pretty=oneline -n 20 --graph
-	# View the current working tree status using the short format
-	s = status -s
-	# Show verbose output about tags, branches or remotes
-	tags = tag -l
-	branches = branch -a
-	remotes = remote -v
-	# Credit an author on the latest commit
-	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+    # View the SHA, description, and history graph of the latest 20 commits
+    l = log --pretty=oneline -n 20 --graph
+    # View the current working tree status using the short format
+    s = status -s
+    # Show verbose output about tags, branches or remotes
+    tags = tag -l
+    branches = branch -a
+    remotes = remote -v
+    # Credit an author on the latest commit
+    credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 
 [apply]
-	# Detect whitespace errors when applying a patch
-	whitespace = fix
+    # Detect whitespace errors when applying a patch
+    whitespace = fix
 
 [core]
-	# Treat spaces before tabs, and all kinds of trailing whitespace as an error
-	whitespace = space-before-tab,trailing-space
+    # Treat spaces before tabs, and all kinds of trailing whitespace as an error
+    whitespace = space-before-tab,trailing-space
 
 [color]
-	# Use colors in Git commands that are capable of colored output when outputting to the terminal
-	ui = auto
+    # Use colors in Git commands that are capable of colored output when outputting to the terminal
+    ui = auto
 [color "branch"]
-	current = yellow reverse
-	local = yellow
-	remote = green
+    current = yellow reverse
+    local = yellow
+    remote = green
 [color "diff"]
-	meta = yellow bold
-	frag = magenta bold
-	old = red bold
-	new = green bold
+    meta = yellow bold
+    frag = magenta bold
+    old = red bold
+    new = green bold
 [color "status"]
-	added = yellow
-	changed = green
-	untracked = cyan
+    added = yellow
+    changed = green
+    untracked = cyan
 [merge]
-	# Include summaries of merged commits in newly created merge commit messages
-	log = true
+    # Include summaries of merged commits in newly created merge commit messages
+    log = true
 
 # Use `origin` as the default remote on the `master` branch in all cases
 [branch "master"]
-	remote = origin
-	merge = refs/heads/master
+    remote = origin
+    merge = refs/heads/master
 
 # URL shorthands
 [url "git@github.com:"]
-	insteadOf = "gh:"
-	pushInsteadOf = "github:"
-	pushInsteadOf = "git://github.com/"
+    insteadOf = "gh:"
+    pushInsteadOf = "github:"
+    pushInsteadOf = "git://github.com/"
 [url "git://github.com/"]
-	insteadOf = "github:"
+    insteadOf = "github:"
 [url "git@gist.github.com:"]
-	insteadOf = "gst:"
-	pushInsteadOf = "gist:"
-	pushInsteadOf = "git://gist.github.com/"
+    insteadOf = "gst:"
+    pushInsteadOf = "gist:"
+    pushInsteadOf = "git://gist.github.com/"
 [url "git://gist.github.com/"]
-	insteadOf = "gist:"
+    insteadOf = "gist:"
 
 [push]
-	default = matching
+    default = matching
