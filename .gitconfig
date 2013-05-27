@@ -14,7 +14,7 @@
     ls = ls-files
     lol = log --graph --decorate --pretty=oneline --abbrev-commit
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
-    log2 = log --first-parent
+    revlog = log --first-parent
     untracked = ls-files -o
 
     # View the SHA, description, and history graph of the latest 20 commits
