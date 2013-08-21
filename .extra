@@ -42,12 +42,6 @@ ssh-add -L >/dev/null 2>/dev/null || ssh-add
 
 # virtualenv and python
 
-alias django15='. ~/virtualenv/django15/bin/activate'
-alias django14='. ~/virtualenv/django14/bin/activate'
-alias django13='. ~/virtualenv/django13/bin/activate'
-alias mapium='. ~/virtualenv/mapium/bin/activate'
-alias flask='. ~/virtualenv/flask/bin/activate'
-
 function venv() {
     . ~/virtualenv/$1/bin/activate
 }
