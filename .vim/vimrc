@@ -4,6 +4,10 @@
 " modeline into a file) (override default value of 5)
 set modelines=0
 
+" import pathogen before all auto-commands
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+
 " general editing
 set nocompatible    " use vim defaults instead of 100% vi compatibility
 set backspace=indent,eol,start  " more powerful backspacing
