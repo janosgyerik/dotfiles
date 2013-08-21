@@ -5,7 +5,7 @@
 set modelines=0
 
 " import pathogen before all auto-commands
-call pathogen#runtime_append_all_bundles()
+call pathogen#incubate()
 call pathogen#helptags()
 
 " general editing
