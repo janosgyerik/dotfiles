@@ -31,6 +31,7 @@
     remotes = remote -v
     # Credit an author on the latest commit
     credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
+    today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
 
 [apply]
     # Detect whitespace errors when applying a patch
