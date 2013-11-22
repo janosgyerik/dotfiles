@@ -69,7 +69,8 @@ function fs() {
 }
 
 # Use Git’s colored diff when available
-cat << EOF >> /dev/null
+# no. not ergonomic for me.
+cat <<EOF >/dev/null
 hash git &>/dev/null
 if [ $? -eq 0 ]; then
 	function diff() {
