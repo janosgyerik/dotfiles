@@ -4,6 +4,9 @@ cd $(dirname "$0")
 
 for i in .??*; do
     if test -f ~/$i; then
-        cmp $i ~/$i >/dev/null || { echo diff $i ~/$i; echo vim -d $i ~/$i; }
+        if ! cmp $i ~/$i >/dev/null; then
+            echo diff $i ~/$i
+            echo gvim -d $i ~/$i
+        fi
     fi
 done
