@@ -71,6 +71,10 @@ if has("autocmd")
 
   " Treat .json files as .js
   autocmd BufNewFile,BufRead *.json setfiletype json syntax=javascript
+
+  " go support
+  "set runtimepath+=/opt/local/go/misc/vim
+  au BufRead,BufNewFile *.go   set filetype=go
 endif
 
 " Mappings for normal mode
