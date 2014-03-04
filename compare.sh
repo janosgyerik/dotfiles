@@ -10,6 +10,7 @@ for i in .??*; do
             echo diff $i ~/$i
             echo gvim -d $i ~/$i
             case "$cmd" in
+                mvim) mvim -d $i ~/$i ;;
                 gvim) gvim -d $i ~/$i ;;
                 vim) vim -d $i ~/$i ;;
                 diff) diff $i ~/$i | less ;;
