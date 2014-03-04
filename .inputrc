@@ -46,3 +46,9 @@ set convert-meta off
 #"\e[5D": backward-word
 #"\e\e[C": forward-word
 #"\e\e[D": backward-word
+#
+# alt right/left
+#"\e[C": forward-word
+#"\e[D": backward-word
+# alt backspace  # Manage Profiles / Keyboard Profiles / Global / + / Key: delete, Modifier: Option, Action: send escape sequence = d, High interception priority
+"\ed": backward-kill-word
