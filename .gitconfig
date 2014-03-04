@@ -16,6 +16,7 @@
     lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
     revlog = log --first-parent
     untracked = ls-files -o
+    add = add -v
 
     # deployment
     deploy-beta = push releases master:beta
