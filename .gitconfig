@@ -12,11 +12,12 @@
     # other custom shortcuts
     br = branch
     ls = ls-files
-    lol = log --graph --decorate --pretty=oneline --abbrev-commit
-    lola = log --graph --decorate --pretty=oneline --abbrev-commit --all
+    lol = log --graph --decorate --oneline
+    lola = log --graph --decorate --oneline --all
     revlog = log --first-parent
     untracked = ls-files -o
     add = add -v
+    grep = grep -n
 
     # deployment
     deploy-beta = push releases master:beta
@@ -33,6 +34,9 @@
     # Credit an author on the latest commit
     credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
     today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
+    mrequest = push -u origin HEAD
+    delete-unused-branches = "!f() { git branch | xargs git branch -d; }; f"
+    missing = "!f() { git rev-list ..$1 --oneline | sed -e '1 iOnly in other:'; git rev-list $1.. --oneline | sed -e '1 iOnly in HEAD:'; }; f"
 
 [apply]
     # Detect whitespace errors when applying a patch
