@@ -1,0 +1,7 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =5
+let g:netrw_dirhist_1='/Users/janos/dev/git/github/homepage/_posts/core-samples'
+let g:netrw_dirhist_2='/Users/janos/tmp/stack/django/test15/test15'
+let g:netrw_dirhist_3='/Users/janos/dev/git/github/djbootstrap/whitelist_auth/management'
+let g:netrw_dirhist_4='/Users/janos/dev/git/github/djbootstrap/whitelist_auth'
+let g:netrw_dirhist_5='/Users/janos/dev/git/github/webdict/plugins'
