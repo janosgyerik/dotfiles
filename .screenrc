@@ -1,0 +1,5 @@
+# Disable the startup message
+startup_message off
+
+# Enable activity monitoring for all new windows by default
+defmonitor on
