@@ -36,8 +36,14 @@
     today = !git log --since=midnight --author=\"$(git config user.name)\" --oneline
     mr = push -u origin HEAD
     mrf = push -u origin HEAD --force-with-lease
-    delete-unused-branches = "!f() { git branch | xargs git branch -d; }; f"
+    delete-unused-branches = "!f() { git remote prune origin; git branch | xargs git branch -d; }; f"
     missing = "!f() { test $# -gt 1 && { first=$1; second=$2; } || { first=HEAD; second=$1; }; git rev-list $first..$second --oneline | sed -e 1i'\\ ' -e '1iOnly in '$second: -e 's/^/    /'; git rev-list $second..$first --oneline | sed -e 1i'\\ ' -e '1iOnly in '$first: -e 's/^/    /'; }; f"
+    resolve = "!f() { git status -s | sed -ne 's/^UU //p' | xargs -r gvim; }; f"
+    undelete = "!f() { git checkout $(git rev-list -n 1 HEAD -- \"$1\")^ -- \"$1\"; }; f"
+    current-branch = rev-parse --abbrev-ref HEAD
+    follow = "!f() { b=$(git rev-parse --abbrev-ref HEAD); git fetch origin $b; git reset --hard origin/$b; }; f"
+    fixtolast = "!f() { p() { git status --porcelain | head -n1 | sed -e s/...//; }; path=$(p); git commit --fixup $(git log --format=%H -n1 $path) $path; }; f"
+    testpr = "!f() { [ \"$1\" ] || return; pr=$1; git fetch origin pull/$pr/head:pr/ext/$pr; git checkout pr/ext/$pr; }; f"
 
     # example usage: git pie s/foo/bar/g
     pie = "!f() {                                            \
@@ -88,8 +94,6 @@
 # URL shorthands
 [url "git@github.com:"]
     insteadOf = "gh:"
-    pushInsteadOf = "github:"
-    pushInsteadOf = "git://github.com/"
 [url "https://github.com/"]
     insteadOf = "ghh:"
 [url "git@github.com:janosgyerik/"]
@@ -98,8 +102,6 @@
     insteadOf = "bbme:"
 [url "git@github.com:SonarSource/"]
     insteadOf = "sonar:"
-[url "git://github.com/"]
-    insteadOf = "github:"
 [url "git@gist.github.com:"]
     insteadOf = "gst:"
     pushInsteadOf = "gist:"
