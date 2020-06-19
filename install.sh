@@ -58,7 +58,7 @@ while [ $# != 0 ]; do
     shift
 done
 
-set -- "${args[@]}"
+${#args} != 0 && set -- "${args[@]}"
 
 script_dir=$(cd "$(dirname "$0")"; pwd)
 
